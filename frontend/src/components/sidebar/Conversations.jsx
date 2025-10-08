@@ -19,8 +19,9 @@ function Conversations() {
                         emoji={getRandomEmoji()}
                         lastIndex={index === conversations.length - 1}
                     />
+                )
                 ))
-            )}
+            }
 
             {loading ? <span className='loading loading-spinner mx-auto'></span> : null}
         </div>

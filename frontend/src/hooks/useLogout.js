@@ -19,6 +19,8 @@ function useLogout() {
 
             // REMOVE FROM CONTEXT
             setAuthUser(null)
+            
+            toast.success("User logged out successfully")
         }
         catch (err) {
             toast.error(err.message)

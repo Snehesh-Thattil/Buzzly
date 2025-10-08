@@ -10,7 +10,7 @@ const generateTokenAndCookie = (userId, res) => {
         maxAge: 15 * 24 * 60 * 60 * 1000, // IN MS
         httpOnly: true, // PREVENT CROSS-SITE SCRIPTING(XSS) ATTACKS
         sameSite: "strict", // PREVENT CROSS-SITE REQUEST FORGERY(CSRF) ATTACKS
-        secure: process.env.NODE_ENV !== 'development'
+        secure: process.env.NODE_ENV === 'production'
     })
 }
 

@@ -2,9 +2,11 @@ import Message from './Message'
 import useFetchChats from '../../hooks/useFetchChats'
 import MessageSkeleton from '../skeletons/MessageSkeleton'
 import { useEffect, useRef } from 'react'
+import useListenMessages from '../../hooks/useListenMessages'
 
 function Messages() {
     const { loading, messages } = useFetchChats()
+    useListenMessages() // LISTEN TO ANY INCOMING MESSAGES
     const lastMessageRef = useRef()
 
     useEffect(() => {

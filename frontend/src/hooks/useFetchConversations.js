@@ -9,14 +9,18 @@ function useFetchConversations() {
         const getConversations = async () => {
             setLoading(true)
             try {
-                const res = await fetch('/api/users/fetch-conversations')
+                const res = await fetch('/api/users/fetch-conversations', {
+                    method: 'GET',
+                    credentials: 'include'
+                })
+
                 const data = await res.json()
                 if (data.error) throw new Error(data.error)
 
                 setConversations(data)
             }
             catch (err) {
-                toast.error(err)
+                toast.error(err.message)
             }
             finally {
                 setLoading(false)

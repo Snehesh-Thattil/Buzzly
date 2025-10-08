@@ -60,7 +60,7 @@ module.exports = {
         const searchQuery = req.params.searchQuery.toLowerCase()
 
         if (!searchQuery?.trim()) {
-            return res.status(400).json({ error: "Search query is required" });
+            return res.status(400).json({ error: "Search query is required" })
         }
 
         try {

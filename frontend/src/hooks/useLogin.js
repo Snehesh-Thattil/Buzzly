@@ -27,6 +27,8 @@ function useLogin() {
 
             // UPDATE ON AUTH CONTEXT
             setAuthUser(data)
+
+            toast.success(`Loged in as ${username}`)
         }
         catch (err) {
             toast.error(err.message)

@@ -1,6 +1,7 @@
 const { mongoose } = require('mongoose')
 const Conversations = require('../database/models/conversations.model')
 const Messages = require('../database/models/messages.model')
+const { getRecieverSocketId, io } = require('../socket/socket')
 
 module.exports = {
     sendMesage: async (req, res) => {
@@ -33,8 +34,16 @@ module.exports = {
                 conversation.messages.push(newMessage)
             }
 
-            // PARALLELLY SAVE IN DB
+            // PARALLELLY SAVE IN BOTH COLLECTIONS
             await Promise.all([conversation.save(), newMessage.save()])
+
+            // SOCKET IO FUNTIONALITY
+            const recieverSocketId = getRecieverSocketId(recieverId)
+
+            if (recieverSocketId) {
+                // IO.TO USED SEND EVENTS TO A SPECIFIC USER
+                io.to(recieverSocketId).emit("newMessage", newMessage)
+            }
 
             res.status(201).json(newMessage)
         }
