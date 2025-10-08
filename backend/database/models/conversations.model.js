@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const conversationSchema = new mongoose.Schema({
     participants: [
@@ -17,4 +17,4 @@ const conversationSchema = new mongoose.Schema({
 }, { timestamps: true })
 
 const Conversations = mongoose.model("Conversations", conversationSchema)
-module.exports = Conversations
+export default Conversations

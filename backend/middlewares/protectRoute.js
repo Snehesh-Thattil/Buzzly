@@ -1,27 +1,26 @@
-const jwt = require('jsonwebtoken')
-const User = require('../database/models/users.model')
+import jwt from 'jsonwebtoken'
+import User from '../database/models/users.model.js'
 
 const protectRoute = async (req, res, next) => {
     try {
         // ACCESS TOKEN FROM COOKIE
         const token = req.cookies.jwt
-        if (!token) return res.status(401).json({ error: "Unauthorized  - No Token" })
+        if (!token) return res.status(401).json({ error: "Unauthorized - No Token" })
 
-        // VERIFY JWT TOKEN WITH SECRETKEY
+        // VERIFY JWT TOKEN WITH SECRET KEY
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
-        if (!decoded) return res.send(401).json({ error: "Unauthorized  - Invalid Token" })
+        if (!decoded) return res.status(401).json({ error: "Unauthorized - Invalid Token" })
 
-        // FETCH USERID FROM DATABASE
+        // FETCH USER FROM DATABASE
         const user = await User.findById(decoded.userId).select("-password")
-        if (!user) return res.send(404).json({ error: "User not found" })
+        if (!user) return res.status(404).json({ error: "User not found" })
 
         req.user = user
         next()
-    }
-    catch (err) {
+    } catch (err) {
         console.log("Error in protectRoute middleware :", err.message)
         res.status(500).json({ error: "Internal server error" })
     }
 }
 
-module.exports = protectRoute
+export default protectRoute
